@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
-
+const cors = require('cors')
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const categoryRoutes = require('./routes/category');
@@ -22,7 +22,7 @@ mongoose.connect(process.env.DATABASE)
 .catch((err)=>{
     console.log(err);
 })
-
+app.use(cors())
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
