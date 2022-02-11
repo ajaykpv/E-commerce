@@ -8,7 +8,7 @@ const Card = ({
 }) => {
  
   return (
-    <div className='col-4 mb-3'>
+    
     <div className="card ">
       <div className="card-header card-header-1 ">{product.name}</div>
       <div className="card-body">
@@ -18,13 +18,12 @@ const Card = ({
         <p className="black-9">Category: {product.category && product.category.name}</p>
         <p className="black-8">Added on </p>
         <br />
-        <Link to="/">
+        <Link to={`/product/${product._id}`}>
           <button className='btn btn-outline-primary mt-2 mb-2'>View product</button>
         </Link>
           <button className='btn btn-outline-warning mt-2 mb-2 mx-4'>Add to Cart</button>
 
       </div>
-    </div>
     </div>
   );
 };

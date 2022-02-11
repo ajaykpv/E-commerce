@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./Layout";
 import { getProducts } from "./apiCore";
-import Card from "./card";
+import Card from "./Card";
+import Search from "./Search";
 const Home = () =>{
    const [productsBySell,setproductsBySell] =useState([])
    const [productsByArrival,setproductsByArrival] =useState([])
@@ -30,19 +31,26 @@ const Home = () =>{
       loadProductBySell()
    },[])
    return <Layout title="Home page" description="Node react" className="container-fluid">
+               <Search/>
                <h2 className="mb-4"> Best selling</h2>
                <div className="row">
                         {productsBySell.map((product,index)=>(
-                        <Card key={index} product={product}/>
+                       <div key={index}className="col-4 mb-3">
+                           <Card  product={product}/>
+                           </div>
                      ))}
                </div>
                
                <br></br>
                <h2 className="mb-4"> New Arrival</h2>
                <div className="row">
+                  
                {productsByArrival.map((product,index)=>(
-                  <Card key={index} product={product}/>
+                  <div key={index}className="col-4 mb-3">
+                  <Card  product={product}/>
+                  </div>
                ))}
+               
                </div>
    </Layout>
 }
