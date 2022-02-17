@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {userById, read, update} = require('../controllers/user');
+const {userById, read, update, purchaseHistory} = require('../controllers/user');
 const {isSignedin,isAuth,isAdmin} = require('../controllers/auth');
 
 
@@ -13,4 +13,5 @@ router.get('/s/:userId',isSignedin,isAuth,(req,res)=>{
 
 router.get('/user/:userId',isSignedin,isAuth,read)
 router.put('/user/:userId',isSignedin,isAuth,update)
+router.get('/orders/by/user/:userId',isSignedin,isAuth,purchaseHistory)
 module.exports =  router; 

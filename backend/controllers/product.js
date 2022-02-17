@@ -6,7 +6,9 @@ const  {errorHandler} = require('../helpers/dbErrorHandlers');
 const { exec } = require('child_process');
 
 exports.productById= (req,res,next,id)=>{
-    Product.findById(id).exec((err,product)=>{
+    Product.findById(id)
+    .populate("category")    
+    .exec((err,product)=>{
         if(err){
             return res.status(400).json({
                 error: "product not found."
@@ -83,13 +85,6 @@ exports.update = (req,res)=>{
            return res.status(400).json({
                error:"Image could not be uploaded"
            })
-       }
-       const {name, description, price, quantity, shipping, category} = fields;
-
-       if(!name || !description || !price || !quantity || !shipping || !category){
-            return res.status(400).json({
-                error:"All fields are required."
-            })
        }
 
        let products = req.product;
@@ -235,4 +230,24 @@ exports.listSearch = (req, res) => {
             res.json(products);
         }).select('-photo');
     }
+};
+
+exports.decreaseQuantity = (req, res, next) => {
+    let bulkOps = req.body.order.products.map(item => {
+        return {
+            updateOne: {
+                filter: { _id: item._id },
+                update: { $inc: { quantity: -item.count, sold: +item.count } }
+            }
+        };
+    });
+
+    Product.bulkWrite(bulkOps, {}, (error, products) => {
+        if (error) {
+            return res.status(400).json({
+                error: 'Could not update product'
+            });
+        }
+        next();
+    });
 };

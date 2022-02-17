@@ -14,7 +14,7 @@ const Product = props => {
                 setError(data.error);
             } else {
                 setProduct(data);
-                console.log(data);
+                // console.log(data);
                 // fetch related products
                 listRelated(data._id).then(data => {
                     if (data.error) {
@@ -47,7 +47,7 @@ const Product = props => {
                     <h4>Related products</h4>
                     {relatedProduct.map((p, i) => (
                         <div className="mb-3" key={i}>
-                            <Card product={p} />
+                            <Card product={p} showViewProductButton ={false} />
                         </div>
                     ))}
                 </div>
